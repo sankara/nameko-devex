@@ -28,6 +28,7 @@ class Order(DeclarativeBase):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    order_details = relationship('OrderDetail', backref="order", lazy='joined')
 
 
 class OrderDetail(DeclarativeBase):
@@ -39,7 +40,7 @@ class OrderDetail(DeclarativeBase):
         ForeignKey("orders.id", name="fk_order_details_orders"),
         nullable=False
     )
-    order = relationship(Order, backref="order_details")
+    #order = relationship(Order, backref="order_details", lazy='dynamic')
     product_id = Column(Integer, nullable=False)
     price = Column(DECIMAL(18, 2), nullable=False)
     quantity = Column(Integer, nullable=False)
